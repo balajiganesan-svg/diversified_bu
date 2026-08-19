@@ -58,15 +58,22 @@ while ($true) {
     $er++
 }
 
-# ---- Sheet 3: Settings (Auto Send toggle) ----
+# ---- Sheet 3: Settings (Auto Send toggle, Show Project Summary toggle) ----
 $autoSend = $false
+$showProjectSummary = $true
 try {
     $wsSettings = $wb.Worksheets.Item("Settings")
     $autoSendValue = "$($wsSettings.Cells.Item(2,2).Text)".Trim()
     $autoSend = ($autoSendValue -ieq "Yes")
+
+    $showSummaryValue = "$($wsSettings.Cells.Item(3,2).Text)".Trim()
+    if (-not [string]::IsNullOrWhiteSpace($showSummaryValue)) {
+        $showProjectSummary = ($showSummaryValue -ieq "Yes")
+    }
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($wsSettings) | Out-Null
 } catch {
     $autoSend = $false   # no Settings sheet found -> safest default is draft-only
+    $showProjectSummary = $true
 }
 
 # ---- Sheet 4: My Info (personal fields -- this is what makes the script identical for every user) ----
@@ -166,14 +173,21 @@ foreach ($dayName in $dayNames) {
     }
 }
 
-$html = @"
-<div style="font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#000000;margin:0;padding:0;">
-<p style="margin:0 0 10px 0;">$greetingLine</p>
-<p style="margin:0 0 14px 0;">Please find the weekly status for the week $weekBeginStr to $reportDateStr below. Kindly let me know if you need any further clarification.</p>
+$projectSummarySection = ""
+if ($showProjectSummary) {
+    $projectSummarySection = @"
 <table style="border-collapse:collapse;width:700px;margin:0 0 14px 0;">
   <tr><td colspan="1" style="border:$border;background:$sectionBlu;font-weight:bold;text-align:center;padding:6px;">Project Summary for This Week</td></tr>
 $projectRows
 </table>
+"@
+}
+
+$html = @"
+<div style="font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#000000;margin:0;padding:0;">
+<p style="margin:0 0 10px 0;">$greetingLine</p>
+<p style="margin:0 0 14px 0;">Please find the weekly status for the week $weekBeginStr to $reportDateStr below. Kindly let me know if you need any further clarification.</p>
+$projectSummarySection
 <table style="border-collapse:collapse;width:700px;margin:0 0 14px 0;">
   <tr><td colspan="2" style="border:$border;background:$purple;color:#FFFFFF;font-weight:bold;text-align:center;padding:8px;">Weekly Status Report</td></tr>
   <tr><td colspan="2" style="border:$border;background:$sectionBlu;font-weight:bold;text-align:center;padding:6px;">Project Details</td></tr>

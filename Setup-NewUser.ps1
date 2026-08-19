@@ -136,9 +136,13 @@ if (Test-Path $excelPath) {
     $wsSettings.Range("A1:B1").Interior.Color = 0xD9CFC2
     $wsSettings.Cells.Item(2,1) = "Auto Send (Yes/No)"
     $wsSettings.Cells.Item(2,2) = "No"
-    $wsSettings.Cells.Item(3,1) = "Note: set to 'Yes' before the Friday run to have the report sent automatically instead of just saved as a draft."
-    $wsSettings.Cells.Item(3,1).Font.Italic = $true
-    $wsSettings.Range("A1:B3").Borders.LineStyle = 1
+    $wsSettings.Cells.Item(3,1) = "Show Project Summary (Yes/No)"
+    $wsSettings.Cells.Item(3,2) = "Yes"
+    $wsSettings.Cells.Item(4,1) = "Note: 'Auto Send' set to 'Yes' before the Friday run sends the report automatically instead of just saving it as a draft. 'Show Project Summary' set to 'No' hides the narrative Project Summary section from the email entirely, leaving just the Project Details and Effort Details tables."
+    $wsSettings.Cells.Item(4,1).Font.Italic = $true
+    $wsSettings.Range("A1:B4").Borders.LineStyle = 1
+    $wsSettings.Range("A4").WrapText = $true
+    $wsSettings.Range("A4").RowHeight = 45
     $wsSettings.Columns.Item(1).ColumnWidth = 24
     $wsSettings.Columns.Item(2).ColumnWidth = 14
 
