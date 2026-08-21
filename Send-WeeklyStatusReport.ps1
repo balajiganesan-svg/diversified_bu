@@ -53,7 +53,8 @@ while ($true) {
         Project     = "$($wsEffort.Cells.Item($er,2).Text)".Trim()
         Task        = "$($wsEffort.Cells.Item($er,3).Text)".Trim()
         Description = "$($wsEffort.Cells.Item($er,4).Text)".Trim()
-        Blockers    = "$($wsEffort.Cells.Item($er,5).Text)".Trim()
+        Tickets     = "$($wsEffort.Cells.Item($er,5).Text)".Trim()
+        Blockers    = "$($wsEffort.Cells.Item($er,6).Text)".Trim()
     }
     $er++
 }
@@ -167,6 +168,7 @@ foreach ($dayName in $dayNames) {
     <td style="border:$border;padding:6px;text-align:center;">$(HtmlEncode $entry.Project)</td>
     <td style="border:$border;padding:6px;">$(HtmlEncode $entry.Task)</td>
     <td style="border:$border;padding:6px;">$(HtmlEncode $entry.Description)</td>
+    <td style="border:$border;padding:6px;text-align:center;">$(HtmlEncode $entry.Tickets)</td>
     <td style="border:$border;padding:6px;text-align:center;">$(HtmlEncode $entry.Blockers)</td>
   </tr>
 "@
@@ -199,12 +201,13 @@ $projectSummarySection
   <tr style="background:$bandWhite;"><td style="border:$border;font-weight:bold;padding:6px;">Emp ID</td><td style="border:$border;padding:6px;">$employeeId</td></tr>
 </table>
 <table style="border-collapse:collapse;width:700px;margin:0 0 14px 0;">
-  <tr><td colspan="5" style="border:$border;background:$sectionBlu;font-weight:bold;text-align:center;padding:6px;">Effort Details</td></tr>
+  <tr><td colspan="6" style="border:$border;background:$sectionBlu;font-weight:bold;text-align:center;padding:6px;">Effort Details</td></tr>
   <tr style="background:$bandGrey;font-weight:bold;">
     <td style="border:$border;text-align:center;padding:6px;width:100px;">Date</td>
     <td style="border:$border;text-align:center;padding:6px;width:90px;">Project</td>
-    <td style="border:$border;text-align:center;padding:6px;width:170px;">Task</td>
-    <td style="border:$border;text-align:center;padding:6px;width:250px;">Description</td>
+    <td style="border:$border;text-align:center;padding:6px;width:150px;">Task</td>
+    <td style="border:$border;text-align:center;padding:6px;width:220px;">Description</td>
+    <td style="border:$border;text-align:center;padding:6px;width:80px;">Tickets</td>
     <td style="border:$border;text-align:center;padding:6px;width:90px;">Blockers/Remarks</td>
   </tr>
 $effortRows

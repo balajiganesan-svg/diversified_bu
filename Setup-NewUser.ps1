@@ -97,10 +97,10 @@ if (Test-Path $excelPath) {
     # -- Effort Details --
     $wsEffort = $wb.Worksheets.Add([Type]::Missing, $wsSummary)
     $wsEffort.Name = "Effort Details"
-    $headers = @("Day","Project","Task","Description","Blockers/Remarks")
-    for ($c = 0; $c -lt 5; $c++) { $wsEffort.Cells.Item(1,$c+1) = $headers[$c] }
-    $wsEffort.Range("A1:E1").Font.Bold = $true
-    $wsEffort.Range("A1:E1").Interior.Color = 0xD9CFC2
+    $headers = @("Day","Project","Task","Description","Tickets","Blockers/Remarks")
+    for ($c = 0; $c -lt 6; $c++) { $wsEffort.Cells.Item(1,$c+1) = $headers[$c] }
+    $wsEffort.Range("A1:F1").Font.Bold = $true
+    $wsEffort.Range("A1:F1").Interior.Color = 0xD9CFC2
     $days = @("Monday","Tuesday","Wednesday","Thursday","Friday")
     $er = 2
     foreach ($d in $days) {
@@ -109,23 +109,26 @@ if (Test-Path $excelPath) {
         $wsEffort.Cells.Item($er,3) = ""
         $wsEffort.Cells.Item($er,4) = ""
         $wsEffort.Cells.Item($er,5) = ""
+        $wsEffort.Cells.Item($er,6) = ""
         $er++
         $wsEffort.Cells.Item($er,1) = $d
         $wsEffort.Cells.Item($er,2) = "Internal"
         $wsEffort.Cells.Item($er,3) = "Non Billable/ Meetings"
         $wsEffort.Cells.Item($er,4) = "Meetings - Daily Internal Standup"
         $wsEffort.Cells.Item($er,5) = ""
+        $wsEffort.Cells.Item($er,6) = ""
         $er++
     }
     $wsEffort.Cells.Item($er+1,1) = "Note: Project must exactly match a name from the 'Project Summary' sheet, or be 'Internal'."
     $wsEffort.Cells.Item($er+1,1).Font.Italic = $true
-    $wsEffort.Range("A1:E$($er-1)").Borders.LineStyle = 1
+    $wsEffort.Range("A1:F$($er-1)").Borders.LineStyle = 1
     $wsEffort.Range("D2:D$($er-1)").WrapText = $true
     $wsEffort.Columns.Item(1).ColumnWidth = 12
     $wsEffort.Columns.Item(2).ColumnWidth = 16
     $wsEffort.Columns.Item(3).ColumnWidth = 24
     $wsEffort.Columns.Item(4).ColumnWidth = 60
-    $wsEffort.Columns.Item(5).ColumnWidth = 22
+    $wsEffort.Columns.Item(5).ColumnWidth = 16
+    $wsEffort.Columns.Item(6).ColumnWidth = 22
 
     # -- Settings --
     $wsSettings = $wb.Worksheets.Add([Type]::Missing, $wsEffort)
